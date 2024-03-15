@@ -20,11 +20,13 @@ useEffect(() => {
 
 const initialLoad = async() => {
     const nowPlayingMovies = await UseCases.moviesNowPlayingUseCase(movieDBFetcher)
-
+   // console.log(nowPlayingMovies[0]);   
 }
+ 
+    return {
+        isLoading,
+        nowPlaying,
 
-  
-    return {} 
-
+    } 
 
 }
