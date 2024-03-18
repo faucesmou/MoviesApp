@@ -3,7 +3,7 @@ import { HttpAdapter } from "./http.adapter";
 
 interface Options {
     baseUrl: string;
-    params: Record<string, string>
+    params: Record<string,string>
 }
 
 
@@ -30,11 +30,7 @@ export class AxiosAdapter implements HttpAdapter  {
             
 
         }
-
-
-
-
-        throw new Error("Method not implemented.");
+/*   throw new Error("Method not implemented."); */
     }
 
 }

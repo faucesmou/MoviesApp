@@ -1,32 +1,69 @@
 import React, { useEffect, useState } from 'react'
-import { Movie } from '../../core/entities/movie.entity'
-
-
+import type { Movie } from '../../core/entities/movie.entity'
 import * as UseCases from '../../core/use-cases'
 import { movieDBFetcher } from '../../config/adapters/movieDB.adapter';
 
 export const useMovies = () => {
-/* recomendado para investigar luego    tanStack query */
-  
-const [isLoading, setisLoading] = useState(true);
-const [nowPlaying, setnowPlaying] = useState<Movie[]>([]);
+
+    const [isLoading, setisLoading] = useState(true);
+
+    const [nowPlaying, setNowPlaying] = useState<Movie[]>([]);
+    const [popular, setPopular] = useState<Movie[]>([]);
+    const [topRated, setTopRated] = useState<Movie[]>([]);
+    const [upcoming, setUpcoming] = useState<Movie[]>([]);
+
+    /* recomendado para investigar luego    tanStack query */
 
 
-useEffect(() => {
-  
-    initialLoad();
+    useEffect(() => {
+        initialLoad();
+    }, []);
 
-}, [])
+    const initialLoad = async () => {
+        const nowPlayingPromise = UseCases.moviesNowPlayingUseCase(movieDBFetcher)
+        const popularPromise = UseCases.moviesNowPopularUseCase(movieDBFetcher)
+        const topRatedPromise = UseCases.moviesTopRatedUseCase(movieDBFetcher)
+        const upcomingPromise = UseCases.moviesUpcomingUseCase(movieDBFetcher)
 
-const initialLoad = async() => {
-    const nowPlayingMovies = await UseCases.moviesNowPlayingUseCase(movieDBFetcher)
-   // console.log(nowPlayingMovies[0]);   
-}
- 
-    return {
-        isLoading,
-        nowPlaying,
+        // Ejecutar todas las solicitudes al mismo tiempo
+        const [
+            nowPlayingMovies,
+            popularMovies,
+            topRatedMovies,
+            upcomingMovies,
+        ] = await Promise.all([
 
-    } 
+            nowPlayingPromise,
+            popularPromise,
+            topRatedPromise,
+            upcomingPromise,
 
-}
+        ]);
+
+        setNowPlaying(nowPlayingMovies)
+        setPopular(popularMovies)
+        setTopRated(topRatedMovies)
+        setUpcoming(upcomingMovies)
+
+
+        setisLoading(false);
+
+        console.log({
+            nowPlayingMovies,
+            popularMovies,
+            topRatedMovies,
+            upcomingMovies
+        }); 
+    };
+
+        return {
+            isLoading,
+            nowPlaying,
+            popular,
+            topRated,
+            upcoming,
+
+        }
+
+    };
+
