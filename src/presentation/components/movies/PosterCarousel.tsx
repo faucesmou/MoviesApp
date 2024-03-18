@@ -12,7 +12,7 @@ interface Props {
 }
 
 
-export const PosterCarousel = ( { height = 440, movies }: Props ) => {
+export const PosterCarousel = ( { height = 360, movies }: Props ) => {
   return (
    
     <View style={{ height }}>
