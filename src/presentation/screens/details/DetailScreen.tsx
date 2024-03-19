@@ -20,7 +20,7 @@ const { movieId } = route.params;
   //const { movieId } = useRoute().params;
 
   console.log( {movieId });
-  const { isLoading, movie } = useMovie( movieId )
+  const { isLoading, movie, cast = [] } = useMovie( movieId )
 
 if ( isLoading ){
   return <Text>Loading ..</Text>
@@ -43,7 +43,7 @@ if ( isLoading ){
 
       {/* Details: */}
 
-    <MovieDetails movie={ movie! } />
+    <MovieDetails movie={ movie! } cast={ cast } />
 
     </ScrollView>
     
