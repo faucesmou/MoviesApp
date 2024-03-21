@@ -5,6 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { PosterCarousel } from '../../components/movies/PosterCarousel'
 import { HorizontalCarousel } from '../../components/movies/HorizontalCarousel'
+import { FullScreenLoader } from '../../components/loaders/FullScreenLoader'
 
 
 export const HomeScreen = () => {
@@ -15,7 +16,7 @@ const { isLoading, nowPlaying, popular, topRated, upcoming, popularNextPage } = 
 
 
 if ( isLoading ) {
-  return ( <Text>Cargando...</Text>)
+  return ( <FullScreenLoader/> )
 
 }
   return (
